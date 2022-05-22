@@ -1,12 +1,12 @@
 ﻿namespace WebAPI.Models
 {
-    public class Conversation
+    public class Talk
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public List<string> Talkers { get; set; }
         public List<Message> MessagesList { get; set; }
 
-        public Conversation(int id, List<string> talkers, List<Message> messagesList)
+        public Talk(string id, List<string> talkers, List<Message> messagesList)
         {
             Id = id;
             Talkers = talkers;
