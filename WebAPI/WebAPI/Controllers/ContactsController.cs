@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
+using WebAPI.Models.Requests;
 using WebAPI.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -26,16 +27,28 @@ namespace WebAPI.Controllers
         }
 
         // GET api/<ContactsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [Route("/api/contacts/{id}")]
+        [HttpGet]
+        public IActionResult Get(string user, string id)
         {
-            return "value";
+            var userObject = userService.Get(user);
+            if (userObject == null) return NotFound();
+
+            var contact = userObject.Contacts.Find(c => c.Id == id);
+            if (contact == null) return NotFound();
+            return Ok(contact);
         }
 
         // POST api/<ContactsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] PostContactRequest request)
         {
+            var user = userService.Get(request.User);
+            if(user == null) return NotFound();
+
+            var contact = new Contact(request.Id, request.Name, request.Server, null, null);
+            user.Contacts.Add(contact);
+            return StatusCode(201);
         }
 
         // PUT api/<ContactsController>/5
