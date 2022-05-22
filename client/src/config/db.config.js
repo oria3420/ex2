@@ -16,4 +16,5 @@ export const db = [
     { username: "liam", password: "Gg123456", image: LIAM_IMAGE, nickname: "Liam Sal" }
 ]
 
+export const server = "http://localhost:5235/api";
 export default db;
