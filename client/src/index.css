@@ -1,0 +1,33 @@
+.sign-in{
+background-color: white;
+}
+
+.center {
+  display: block;
+  margin: auto;
+  margin-top: 10%;
+  width: 65%;
+  padding: 20px;
+}
+
+
+.bg {
+  /* The image used */
+  background-image: url("giphy.gif");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.link{
+  margin-left: 33%;
+}
+
+.col-centered{
+  float: none;
+  margin: 0 auto;
+}

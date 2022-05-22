@@ -1,0 +1,51 @@
+.user-profile {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+  }
+  .inline-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .selected-chat {
+    background-color: #b9c3c9
+  }
+  .user-profile:hover {
+    background-color: lightgrey;
+  }
+  
+  .user-image {
+    width: 45px;
+  }
+  
+  .user-image > img {
+    width: 100%;
+    border-radius: 100%;
+  }
+  
+  .user-info {
+    flex: 1;
+    text-align: left;
+    margin-left: 10px;
+  }
+  .user-name {
+    text-transform: capitalize;
+    font-size: 15px;
+  }
+  
+  .user-lastmessage {
+    font-size: 13px;
+    margin-left: 1px;
+    margin-top: 2px;
+    color: gray;
+  }
+
+  .cut-text { 
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    width: 300px; 
+    white-space: nowrap;
+  }

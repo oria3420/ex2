@@ -1,0 +1,42 @@
+.chat-message {
+    display: flex;
+    margin: 15px 30px;
+    flex-direction: column;
+    width: fit-content;
+    max-width: 26rem;
+    padding: 10px;
+
+    border-radius: 10px;
+    height: fit-content;
+    justify-content: space-between;
+    box-shadow: 1px 1px #c0bfbf;
+  }
+  .my-msg{
+    background-color: #dcf8c6;
+  }
+  .mate-msg{
+    background-color: #ebe4e0;
+    align-self: flex-end;
+  }
+  .chat-message-text {
+    text-align: left;
+    font-size: 13px;
+    margin-bottom: -4px;
+    word-break: break-word
+  }
+  
+  .chat-message-date {
+    font-size: 11px;
+    color: gray;
+    font-weight: normal;
+    align-self: flex-end;
+  }
+  .chat-message-date > p {
+  margin: auto !important;
+  padding-top: 0.5rem;
+  }
+  
+  .emoji-picker-react {
+    position: absolute !important;
+    top: -325px;
+  }
