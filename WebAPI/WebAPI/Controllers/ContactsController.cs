@@ -52,9 +52,16 @@ namespace WebAPI.Controllers
         }
 
         // PUT api/<ContactsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [Route("/api/contacts/{id}")]
+        [HttpPut]
+        public void Put(string id, [FromBody] PutContact request)
         {
+            var user = userService.Get(request.User);
+            var contact = user.Contacts.Find(c => c.Id == id);
+
+            contact.Name = request.Name;
+            contact.Server = request.Server;
+
         }
 
         // DELETE api/<ContactsController>/5
