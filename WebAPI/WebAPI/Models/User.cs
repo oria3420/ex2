@@ -22,5 +22,10 @@
         {
             Contacts = contacts;
         }
+
+        public void AddContact(Contact c)
+        {
+            Contacts.Add(c);
+        }
     }
 }

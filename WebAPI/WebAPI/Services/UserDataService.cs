@@ -15,6 +15,33 @@ namespace WebAPI.Services
             _users.Add(item);
         }
 
+        public static void StartContacts()
+        {
+            var talkService = new TalkDataService();
+            var userService = new UserDataService();
+
+           foreach(var talk in talkService.GetAll())
+            {
+                foreach(var userId in talk.Talkers)
+                {
+                    var user = userService.Get(userId);
+                    var secondUserId = talk.Talkers.Find(id => id != userId);
+                    // oriya - user's object
+                    var sUser = userService.Get(secondUserId);
+                    var lastTime = talk.MessagesList.Max(m => m.Created);
+                    var lastMsg = talk.MessagesList.Find(m => m.Created == lastTime);
+
+                    var contactA = new Contact(sUser.Id, sUser.Name, sUser.Server, lastMsg.Content, lastTime);
+                    var contactB = new Contact(user.Id, user.Name, user.Server, lastMsg.Content, lastTime);
+                    if (user.Contacts.Find(c => c.Id == contactA.Id) == null)
+                        user.AddContact(contactA);
+
+                    if (sUser.Contacts.Find(c => c.Id == contactB.Id) == null)
+                        sUser.AddContact(contactB);
+                }
+            }
+        }
+
         public void Delete(string id)
         {
             _users.Remove(Get(id));
