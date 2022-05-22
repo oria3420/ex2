@@ -8,18 +8,20 @@ import { server } from "../../config/db.config";
 
 import useUser from './../../hooks/useUser';
 
-function Chat() {
+function Chat(props) {
     const user = useUser()
     const [currentChat, setCurrentChat] = useState()
     const [chatContacts, setChatContacts] = useState([])
     const navigate = useNavigate()
+    var userId = props.user.username;
 
     useEffect(async() => {
-        var response = await fetch(server + "/contacts");
+        console.log(props.user.username)
+        var response = await fetch(server + "/contacts"+"?user="+userId);
         var data = await response.json();
         console.log(data);
         setChatContacts(data);
-    });
+    }, []);
 
     return (
         <div className="chatpage">

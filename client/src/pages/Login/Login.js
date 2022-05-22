@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { USER_STATUSES } from "../../App";
-import db from "../../config/db.config";
+import { db, BOB_IMAGE} from "../../config/db.config";
+import {server} from "../../config/db.config";
+
 import "./Login.css";
 
 function Login({setUser, setUserStatus}) {
@@ -15,23 +17,32 @@ function Login({setUser, setUserStatus}) {
         );
     }
 
-    const onSubmit = (event) => {
+    async function onSubmit(event) {
         event.preventDefault();
-        const user = db.find(user => user.username === loginForm.username);
-        if (user) {
-            if (user.password === loginForm.password) {
-                setUser(user)
-                setUserStatus(USER_STATUSES.LOGGED_IN)
-                setTimeout(() => navigate("/Chat"), 200)
-            } else {
-                alert('Wrong password!');
-            }
-        }
-        else if(loginForm.username.trim()==='' || loginForm.password.trim()===''){
+        if(loginForm.username.trim()==='' || loginForm.password.trim()===''){
             alert('Please fill all the fields!');
-        } 
+        }
+        
+        var postBody = { "userId": loginForm.username, "password": loginForm.password };
+        var params = {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/json",
+            },
+            body: JSON.stringify(postBody)
+        }
+
+        var response = await fetch(server+"/users/signin",params);
+        if(response.status === 200) {
+            var data = await response.json();
+            var user = { username: loginForm.username, password: loginForm.password, image: BOB_IMAGE, 
+                nickname: data.name };
+            setUser(user)
+            setUserStatus(USER_STATUSES.LOGGED_IN)
+            setTimeout(() => navigate("/Chat"), 200)
+        }
         else {
-            alert('Unknown user!');
+            alert('Invalid password or username!');
         }
     }
 

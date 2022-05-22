@@ -26,7 +26,7 @@ function App() {
     <UserContext.Provider value={user}>
       <Routes>
        {userStatus === USER_STATUSES.LOGGED_IN &&(
-         <Route path='/Chat' element={<Chat />}/> )}
+         <Route path='/Chat' element={<Chat user={user}/>}/> )}
         <Route path='/' element={<Login setUserStatus={setUserStatus} setUser={setUser} />}/>
         <Route path='/Register' element={<Register setUserStatus={setUserStatus} setUser={setUser} />}/>
         {/* <Route path='*' element={<div>NOT FOUND</div>}/> */}
