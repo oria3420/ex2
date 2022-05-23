@@ -16,7 +16,7 @@
             Name = name;
             Server = server;
             Contacts = new List<Contact>();
-            Image = "https://www.popsci.com/uploads/2019/09/20/6EV2TTRN5VHSXCQOTLUEQV2ON4.jpg?auto=webp&width=1440&height=960";
+            Image = "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg";
         }
 
         public User(string id, string password, string name, string server, List<Contact> contacts)

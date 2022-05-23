@@ -16,17 +16,31 @@ namespace WebAPI.Controllers
         {
             userService = new UserDataService();
         }
+
         // GET: api/<ContactsController>
         [Route("/api/contacts")]
         [HttpGet]
         public IActionResult Get(string user)
         {
-            var userObject = userService.Get(user);   
+            var userObject = userService.Get(user);
             if (userObject == null) return NotFound();
             return Ok(userObject.Contacts);
         }
 
-        // GET api/<ContactsController>/5
+        // POST api/<ContactsController>
+        [Route("/api/contacts")]
+        [HttpPost]
+        public IActionResult Post([FromBody] PostContactRequest request)
+        {
+            var user = userService.Get(request.User);
+            if (user == null) return NotFound();
+
+            var contact = new Contact(request.Id, request.Name, request.Server, null, null);
+            user.Contacts.Add(contact);
+            return StatusCode(201);
+        }
+
+        // GET api/<ContactsController>/id
         [Route("/api/contacts/{id}")]
         [HttpGet]
         public IActionResult Get(string user, string id)
@@ -39,35 +53,36 @@ namespace WebAPI.Controllers
             return Ok(contact);
         }
 
-        // POST api/<ContactsController>
-        [HttpPost]
-        public IActionResult Post([FromBody] PostContactRequest request)
-        {
-            var user = userService.Get(request.User);
-            if(user == null) return NotFound();
-
-            var contact = new Contact(request.Id, request.Name, request.Server, null, null);
-            user.Contacts.Add(contact);
-            return StatusCode(201);
-        }
-
-        // PUT api/<ContactsController>/5
+        // PUT api/<ContactsController>/id
         [Route("/api/contacts/{id}")]
         [HttpPut]
-        public void Put(string id, [FromBody] PutContact request)
+        public IActionResult Put(string id, [FromBody] PutContact request)
         {
             var user = userService.Get(request.User);
             var contact = user.Contacts.Find(c => c.Id == id);
 
+            if (contact == null) return NotFound();
+
             contact.Name = request.Name;
             contact.Server = request.Server;
 
+            return StatusCode(204);
+
         }
 
-        // DELETE api/<ContactsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/<ContactsController>/id
+        [Route("/api/contacts/{id}")]
+        [HttpDelete]
+        public IActionResult Delete(string user, string id)
         {
+            var userObject = userService.Get(user);
+            if (userObject == null) return NotFound();
+
+            var contact = userObject.Contacts.Find(c => c.Id == id);
+            if (contact == null) return NotFound();
+
+            userObject.Contacts.Remove(contact);
+            return StatusCode(204);
         }
     }
 }

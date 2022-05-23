@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { USER_STATUSES } from "../../App";
-import { db, BOB_IMAGE} from "../../config/db.config";
+import { db, DEFAULT_IMAGE} from "../../config/db.config";
 import {server} from "../../config/db.config";
 
 import "./Login.css";
@@ -35,7 +35,7 @@ function Login({setUser, setUserStatus}) {
         var response = await fetch(server+"/users/signin",params);
         if(response.status === 200) {
             var data = await response.json();
-            var user = { username: loginForm.username, password: loginForm.password, image: BOB_IMAGE, 
+            var user = { username: loginForm.username, password: loginForm.password, image: DEFAULT_IMAGE, 
                 nickname: data.name };
             setUser(user)
             setUserStatus(USER_STATUSES.LOGGED_IN)
