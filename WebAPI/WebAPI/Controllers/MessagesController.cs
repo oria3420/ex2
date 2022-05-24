@@ -14,6 +14,11 @@ namespace WebAPI.Controllers
         private IDataService<User> userService;
         private IDataService<Talk> talkService;
 
+        public MessagesController()
+        {
+            userService = new UserDataService();
+            talkService = new TalkDataService();
+        }
         private Talk getTalk(string user, string id)
         {
             var userObject = userService.Get(user);
@@ -32,11 +37,6 @@ namespace WebAPI.Controllers
                 }
             }
             return null;
-        }
-        public MessagesController()
-        {
-            userService = new UserDataService();
-            talkService = new TalkDataService();
         }
 
         // GET api/<ContactsController>/id/messages
@@ -66,6 +66,16 @@ namespace WebAPI.Controllers
             }
             msgIdStr = msgId.ToString();
             Message message = new Message(msgIdStr, request.Content, DateTime.Now, true, request.User);
+
+            var userObjectA = userService.Get(request.User);
+            var contactA = userObjectA.Contacts.Find(c => c.Id == id);
+            contactA.Last = request.Content;
+            contactA.Lastdate = DateTime.Now;
+
+            var userObjectB = userService.Get(id);
+            var contactB = userObjectB.Contacts.Find(c => c.Id == request.User);
+            contactB.Last = request.Content;
+            contactB.Lastdate = DateTime.Now;
 
             talk.MessagesList.Add(message);
 

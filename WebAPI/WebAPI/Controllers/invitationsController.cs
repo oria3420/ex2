@@ -40,15 +40,15 @@ namespace WebAPI.Controllers
             userObjectFrom.AddContact(contactB);
             userObjectTo.AddContact(contactA);
 
-            int talkId = Int32.Parse(talkService.GetAll()[talkService.GetAll().Count-1].Id)+1;
+            int talkId = Int32.Parse(talkService.GetAll()[talkService.GetAll().Count - 1].Id) + 1;
             string talkIdStr = talkId.ToString();
 
-            Talk talk = new Talk(talkIdStr, new List<string> { userObjectFrom.Id, userObjectTo.Id}, new List<Message> {});
+            Talk talk = new Talk(talkIdStr, new List<string> { userObjectFrom.Id, userObjectTo.Id }, new List<Message> { });
 
             talkService.Add(talk);
 
             return StatusCode(201);
         }
 
-}
+    }
 }
