@@ -24,7 +24,8 @@ namespace ASP.MVC.Controllers
         // GET: Rates
         public IActionResult Index()
         {
-              return View(_context.GetAll());
+            ViewBag.average = _context.Average();
+            return View(_context.GetAll());
         }
 
         // GET: Rates/Details/5

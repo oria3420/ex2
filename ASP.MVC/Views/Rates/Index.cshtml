@@ -1,10 +1,14 @@
-﻿@model IEnumerable<ASP.MVC.Models.Rate>
+﻿@using ASP.MVC.Models.Services
+@model IEnumerable<ASP.MVC.Models.Rate>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+@{
+    var averge = ViewBag.average;
+}
+<h1>@averge</h1>
 
 <p>
     <a asp-action="Create">Create New</a>

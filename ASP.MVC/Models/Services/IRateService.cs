@@ -8,5 +8,7 @@
         void Add(Rate item);
         void Update(Rate item);
         void Delete(int id);
+
+        double Average();
     }
 }

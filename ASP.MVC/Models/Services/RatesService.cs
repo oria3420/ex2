@@ -5,6 +5,7 @@ namespace ASP.MVC.Models.Services
    
     public class RatesService : IRateService
     {
+
         private static List<Rate> rates = new List<Rate>()
         {
             new Rate("oriya", 5, "mush!!!!"),
@@ -13,12 +14,15 @@ namespace ASP.MVC.Models.Services
         };
         public void Add(Rate item)
         {
+            
             rates.Add(item);
         }
 
         public void Delete(int id)
         {
+            
             rates.Remove(Get(id));
+            
         }
 
         public Rate Get(int id)
@@ -35,6 +39,14 @@ namespace ASP.MVC.Models.Services
         {
             Delete(item.Id);
             Add(item);
+        }
+
+        public double Average()
+        {
+            double sum = 0;
+            foreach (Rate rate in rates)
+                sum += rate.Rating;
+            return sum / rates.Count;
         }
     }
 }
