@@ -17,12 +17,12 @@ function Chat(props) {
 
     useEffect(async() => {
         console.log(props.user.username)
-        var response = await fetch(server + "/contacts"+"?user="+userId);
+        var response = await fetch(server + "/contacts"+"?user="+props.user.username);
         var data = await response.json();
         console.log(data);
         setChatContacts(data);
     }, []);
-
+    
     return (
         <div className="chatpage">
            <nav className="navbar" id="screen-title">
@@ -35,7 +35,7 @@ function Chat(props) {
             </nav>
             <div className="chatpage-container  chat-bg">
                 {/* sidebar */}
-                <Sidebar chatContacts={chatContacts} setChatContacts={setChatContacts} currentChat={currentChat} setCurrentChat={setCurrentChat}/>
+                <Sidebar chatContacts={chatContacts} setChatContacts={setChatContacts} currentChat={currentChat} setCurrentChat={setCurrentChat} props={props} />
                 {/* chatcontainer */}
                 <Chatcontainer currentChat={currentChat} setCurrentChat={setCurrentChat} chatContacts={chatContacts} setChatContacts={setChatContacts}/>
             </div>

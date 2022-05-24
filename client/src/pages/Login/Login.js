@@ -22,7 +22,7 @@ function Login({setUser, setUserStatus}) {
         if(loginForm.username.trim()==='' || loginForm.password.trim()===''){
             alert('Please fill all the fields!');
         }
-        
+
         var postBody = { "userId": loginForm.username, "password": loginForm.password };
         var params = {
             method: 'POST',

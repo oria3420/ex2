@@ -4,12 +4,26 @@ import ChatMessage from "../../../../components/ChatMessage/ChatMessage";
 import { fomatCurrentDate } from "../../../../config/time.config";
 import useUser from "../../../../hooks/useUser";
 import MediaUpload from "../MediaUpload";
+import {server} from '../../../../config/db.config'
 
 function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatContacts }) {
   const inputRef = useRef()
   const [mediaUpload, setMediaUpload] = useState()
   const msgRef = useRef()
   const user = useUser()
+
+  // FETCH MESSAGES OF CHAT -- DOESN'T WORK
+  // useEffect(async () => {
+  //   if (currentChat !== undefined) {
+  //     console.log("Fetch to: " + server + "/contacts/" + currentChat.nickname + "/messages")
+  //     var response = await fetch(server + "/contacts/" + currentChat.nickname + "/messages?user=" + user.id);
+  //     var data = await response.json();
+  //     console.log("Oriya: " + data);
+  //     setCurrentChat(data);
+  //     // currentChat.chat = data;
+  //   }
+  // }, []);
+
 
   function hideMediaUpload() {
     let mediaUpload = document.getElementById('mediaUpload');
@@ -39,8 +53,9 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
       }
     }
     const newChatContacts = chatContacts.map(userObj => {
-      if (userObj.username === currentChat.username) {
+      if (userObj.name === currentChat.name) {
         return { ...userObj, lastMessageTime: newMSG.timestamp, lastMessage: newMSG.content, chat: [...userObj.chat, newMSG] }
+        // return { ...userObj, lastMessageTime: "8:00 AM", lastMessage: newMSG.content, chat: [...userObj.chat, newMSG] }
       }
       return userObj;
     })
