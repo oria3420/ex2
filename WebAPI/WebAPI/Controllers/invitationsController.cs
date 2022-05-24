@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
             var contactTo = userObjectFrom.Contacts.Find(c => c.Id == request.To);
             if (contactTo == null) return NotFound();
             userObjectFrom.AddContact(contactTo);
-            
+            return StatusCode(201);
         }
 
 }
