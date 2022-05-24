@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         public IActionResult Get(string user, string id)
         {
             Talk talk = getTalk(user, id);
-            if(talk== null) return NotFound();
+            if (talk == null) return NotFound();
 
             return Ok(talk.MessagesList);
         }
@@ -58,12 +58,59 @@ namespace WebAPI.Controllers
             Talk talk = getTalk(request.User, id);
             if (talk == null) return NotFound();
 
-            int msgId = talk.MessagesList[talk.MessagesList.Count - 1].Id;
-            Message message = new Message(msgId+1, request.Content, DateTime.Now,true, request.User);
+            int msgId = Int32.Parse(talk.MessagesList[talk.MessagesList.Count - 1].Id)+1;
+            string msgIdStr = msgId.ToString();
+            Message message = new Message(msgIdStr, request.Content, DateTime.Now, true, request.User);
 
             talk.MessagesList.Add(message);
 
             return StatusCode(201);
+        }
+
+        // GET api/<ContactsController>/id1/messages/id2
+        [Route("/api/contacts/{id}/messages/{id2}")]
+        [HttpGet]
+        public IActionResult Get(string user, string id, string id2)
+        {
+            Talk talk = getTalk(user, id);
+            if (talk == null) return NotFound();
+
+            Message message = talk.MessagesList.Find(c => c.Id == id2);
+            if(message == null) return NotFound();
+
+            return(Ok(message));
+        }
+
+        // PUT api/<ContactsController>/id1/messages/id2
+        [Route("/api/contacts/{id}/messages/{id2}")]
+        [HttpPut]
+        public void Put(string id, string id2, [FromBody] PutMessage request)
+        {
+            Talk talk = getTalk(request.User, id);
+            if (talk == null) return;
+
+            Message message = talk.MessagesList.Find(c => c.Id == id2);
+            if (message == null) return;
+
+            message.Content = request.Content;
+
+     
+        }
+
+        // DELETE api/<ContactsController>/id1/messages/id2
+        [Route("/api/contacts/{id}/messages/{id2}")]
+        [HttpDelete]
+        public IActionResult Delete(string user, string id, string id2)
+        {
+            Talk talk = getTalk(user, id);
+            if (talk == null) return NotFound();
+
+            Message message = talk.MessagesList.Find(c => c.Id == id2);
+            if (message == null) return NotFound();
+
+            talk.MessagesList.Remove(message);
+
+            return StatusCode(204);
         }
     }
 }
