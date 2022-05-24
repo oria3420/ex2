@@ -8,7 +8,8 @@ namespace WebAPI.Services
         {
             new User("oriya", "123456Aa", "Oriya Yehudai", "http://localhost:5235"),
             new User("shira", "123456Aa", "Shira Taitelbaum", "http://localhost:5235"),
-            new User("hodaya", "123456Aa", "Hodaya Levi", "http://localhost:5235")
+            new User("hodaya", "123456Aa", "Hodaya Levi", "http://localhost:5235"),
+            new User("carly", "123456Aa", "Carly Rose", "http://localhost:5235")
         };
         public void Add(User item)
         {

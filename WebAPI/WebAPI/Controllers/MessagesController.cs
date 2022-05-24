@@ -58,8 +58,13 @@ namespace WebAPI.Controllers
             Talk talk = getTalk(request.User, id);
             if (talk == null) return NotFound();
 
-            int msgId = Int32.Parse(talk.MessagesList[talk.MessagesList.Count - 1].Id)+1;
-            string msgIdStr = msgId.ToString();
+            int msgId = 0;
+            string msgIdStr;
+            if (talk.MessagesList.Count > 0)
+            {
+                msgId = Int32.Parse(talk.MessagesList[talk.MessagesList.Count - 1].Id) + 1;
+            }
+            msgIdStr = msgId.ToString();
             Message message = new Message(msgIdStr, request.Content, DateTime.Now, true, request.User);
 
             talk.MessagesList.Add(message);
