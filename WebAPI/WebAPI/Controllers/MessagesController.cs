@@ -19,6 +19,39 @@ namespace WebAPI.Controllers
             userService = new UserDataService();
             talkService = new TalkDataService();
         }
+
+        private bool isLastMsg(Message msg, Talk talk)
+        {
+            string lastMsgId = talk.MessagesList[talk.MessagesList.Count - 1].Id;
+            if (lastMsgId == msg.Id)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void updateContact(string user1, string user2, string content)
+        {
+            var userObjectA = userService.Get(user1);
+            var contactA = userObjectA.Contacts.Find(c => c.Id == user2);
+
+            var userObjectB = userService.Get(user2);
+            var contactB = userObjectB.Contacts.Find(c => c.Id == user1);
+
+            contactA.Last = content;
+            contactB.Last = content;
+
+            if (content == null)
+            {
+                contactA.Lastdate = null;
+                contactB.Lastdate = null;
+            }
+            else
+            {
+                contactA.Lastdate = DateTime.Now;
+                contactB.Lastdate = DateTime.Now;
+            }
+        }
         private Talk getTalk(string user, string id)
         {
             var userObject = userService.Get(user);
@@ -67,15 +100,7 @@ namespace WebAPI.Controllers
             msgIdStr = msgId.ToString();
             Message message = new Message(msgIdStr, request.Content, DateTime.Now, true, request.User);
 
-            var userObjectA = userService.Get(request.User);
-            var contactA = userObjectA.Contacts.Find(c => c.Id == id);
-            contactA.Last = request.Content;
-            contactA.Lastdate = DateTime.Now;
-
-            var userObjectB = userService.Get(id);
-            var contactB = userObjectB.Contacts.Find(c => c.Id == request.User);
-            contactB.Last = request.Content;
-            contactB.Lastdate = DateTime.Now;
+            updateContact(request.User, id, request.Content);
 
             talk.MessagesList.Add(message);
 
@@ -91,9 +116,9 @@ namespace WebAPI.Controllers
             if (talk == null) return NotFound();
 
             Message message = talk.MessagesList.Find(c => c.Id == id2);
-            if(message == null) return NotFound();
+            if (message == null) return NotFound();
 
-            return(Ok(message));
+            return (Ok(message));
         }
 
         // PUT api/<ContactsController>/id1/messages/id2
@@ -109,7 +134,12 @@ namespace WebAPI.Controllers
 
             message.Content = request.Content;
 
-     
+            if (isLastMsg(message, talk))
+            {
+                updateContact(request.User, id, request.Content);
+            }
+
+
         }
 
         // DELETE api/<ContactsController>/id1/messages/id2
@@ -122,6 +152,16 @@ namespace WebAPI.Controllers
 
             Message message = talk.MessagesList.Find(c => c.Id == id2);
             if (message == null) return NotFound();
+
+            if (isLastMsg(message, talk) && talk.MessagesList.Count > 1)
+            {
+                Message newLastMsg = talk.MessagesList[talk.MessagesList.Count - 2];
+                updateContact(user, id, newLastMsg.Content);
+            }
+            else
+            {
+                updateContact(user, id, null);
+            }
 
             talk.MessagesList.Remove(message);
 

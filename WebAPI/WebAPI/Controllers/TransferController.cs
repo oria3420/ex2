@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] PostTransferRequest request)
         {
-            Talk talk = getTalk(request.From, request.To);
+            Talk talk = getTalk(request.To, request.From);
             if (talk == null) return NotFound();
 
             int msgId = 0;
@@ -55,13 +55,16 @@ namespace WebAPI.Controllers
             msgIdStr = msgId.ToString();
             Message message = new Message(msgIdStr, request.Content, DateTime.Now, true, request.From);
 
-            var userObjectA = userService.Get(request.From);
-            var contactA = userObjectA.Contacts.Find(c => c.Id == request.To);
-            contactA.Last = request.Content;
-            contactA.Lastdate = DateTime.Now;
+            var userFrom = userService.Get(request.From);
+            if(userFrom != null)
+            {
+                var contactA = userFrom.Contacts.Find(c => c.Id == request.To);
+                contactA.Last = request.Content;
+                contactA.Lastdate = DateTime.Now;
+            }
 
-            var userObjectB = userService.Get(request.To);
-            var contactB = userObjectB.Contacts.Find(c => c.Id == request.From);
+            var userTo = userService.Get(request.To);
+            var contactB = userTo.Contacts.Find(c => c.Id == request.From);
             contactB.Last = request.Content;
             contactB.Lastdate = DateTime.Now;
 

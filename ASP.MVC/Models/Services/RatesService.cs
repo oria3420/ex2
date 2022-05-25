@@ -8,9 +8,9 @@ namespace ASP.MVC.Models.Services
 
         private static List<Rate> rates = new List<Rate>()
         {
-            new Rate("oriya", 5, "mush!!!!"),
-            new Rate("shira", 4, ";)"),
-            new Rate("hodaya", 1, ":(")
+            new Rate("carly", 5, "mush!!!!"),
+            new Rate("bob", 4, ";)"),
+            new Rate("eli", 1, ":(")
         };
         public void Add(Rate item)
         {

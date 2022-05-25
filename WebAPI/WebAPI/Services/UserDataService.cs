@@ -6,10 +6,10 @@ namespace WebAPI.Services
     {
         private static List<User> _users = new List<User>()
         {
-            new User("oriya", "123456Aa", "Oriya Yehudai", "http://localhost:5235"),
-            new User("shira", "123456Aa", "Shira Taitelbaum", "http://localhost:5235"),
-            new User("hodaya", "123456Aa", "Hodaya Levi", "http://localhost:5235"),
-            new User("carly", "123456Aa", "Carly Rose", "http://localhost:5235")
+            new User("carly", "123456Aa", "Carly Rose", "http://localhost:5235"),
+            new User("bob", "123456Aa", "Bob Cohen", "http://localhost:5235"),
+            new User("eli", "123456Aa", "Eli Vos", "http://localhost:5235"),
+            new User("kate", "123456Aa", "Kate Portman", "http://localhost:5235")
         };
         public void Add(User item)
         {
@@ -27,7 +27,7 @@ namespace WebAPI.Services
                 {
                     var user = userService.Get(userId);
                     var secondUserId = talk.Talkers.Find(id => id != userId);
-                    // oriya - user's object
+                    
                     var sUser = userService.Get(secondUserId);
                     var lastTime = talk.MessagesList.Max(m => m.Created);
                     var lastMsg = talk.MessagesList.Find(m => m.Created == lastTime);

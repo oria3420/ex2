@@ -6,23 +6,23 @@ namespace WebAPI.Services
     {
         private static List<Talk> _talks = new List<Talk>()
         {
-            new Talk("1", new List<string> { "oriya", "shira"}, new List<Message>
+            new Talk("1", new List<string> { "carly", "bob"}, new List<Message>
             {
-                new Message("1", "Hey Shira!", DateTime.Now, true, "oriya"),
-                new Message("2", "Hey you!", DateTime.Now, true, "shira"),
-                new Message("3", "Let's go to the cinema!", DateTime.Now, true, "oriya"),
+                new Message("1", "Hey Bob!", DateTime.Now, true, "carly"),
+                new Message("2", "Hey you!", DateTime.Now, true, "bob"),
+                new Message("3", "Let's go to the cinema!", DateTime.Now, true, "carly"),
             }),
-            new Talk("2", new List<string> { "oriya", "hodaya"}, new List<Message>
+            new Talk("2", new List<string> { "carly", "eli"}, new List<Message>
             {
-                new Message("1", "Hey Hodaya!", DateTime.Now, true, "oriya"),
-                new Message("2", "Hey you!", DateTime.Now, true, "hodaya"),
-                new Message("3", "Let's go to the cinema!", DateTime.Now, true, "oriya"),
+                new Message("1", "Hey Eli!", DateTime.Now, true, "carly"),
+                new Message("2", "Hey you!", DateTime.Now, true, "eli"),
+                new Message("3", "Let's go to the cinema!", DateTime.Now, true, "carly"),
             }),
-            new Talk("3", new List<string> { "hodaya", "shira"}, new List<Message>
+            new Talk("3", new List<string> { "eli", "bob"}, new List<Message>
             {
-                new Message("1", "Hey Shira!", DateTime.Now, true, "hodaya"),
-                new Message("2", "Hey you!", DateTime.Now, true, "shira"),
-                new Message("3", "Let's go to the cinema!", DateTime.Now, true, "hodaya"),
+                new Message("1", "Hey Bob!", DateTime.Now, true, "eli"),
+                new Message("2", "Hey you!", DateTime.Now, true, "bob"),
+                new Message("3", "Let's go to the cinema!", DateTime.Now, true, "eli"),
             })
         };
         public void Add(Talk item)

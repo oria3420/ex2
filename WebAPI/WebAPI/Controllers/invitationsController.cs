@@ -26,24 +26,26 @@ namespace WebAPI.Controllers
         public IActionResult Post([FromBody] PostInvitationRequest request)
         {
             var userObjectFrom = userService.Get(request.From);
-            if (userObjectFrom == null) return NotFound();
 
             var userObjectTo = userService.Get(request.To);
             if (userObjectTo == null) return NotFound();
 
-            var isExist = userObjectFrom.Contacts.Find(c => c.Id == request.To);
+            var isExist = userObjectTo.Contacts.Find(c => c.Id == request.From);
             if (isExist != null) return NotFound();
 
-            Contact contactA = new Contact(userObjectFrom.Id, userObjectFrom.Name, request.Server, null, null);
-            Contact contactB = new Contact(userObjectTo.Id, userObjectTo.Name, request.Server, null, null);
-
-            userObjectFrom.AddContact(contactB);
+            Contact contactA = new Contact(request.From, request.From, request.Server, null, null);
             userObjectTo.AddContact(contactA);
+
+            if (userObjectFrom != null)
+            {
+                Contact contactB = new Contact(userObjectTo.Id, userObjectTo.Name, request.Server, null, null);
+                userObjectFrom.AddContact(contactB);
+            }
 
             int talkId = Int32.Parse(talkService.GetAll()[talkService.GetAll().Count - 1].Id) + 1;
             string talkIdStr = talkId.ToString();
 
-            Talk talk = new Talk(talkIdStr, new List<string> { userObjectFrom.Id, userObjectTo.Id }, new List<Message> { });
+            Talk talk = new Talk(talkIdStr, new List<string> { request.From, userObjectTo.Id }, new List<Message> { });
 
             talkService.Add(talk);
 

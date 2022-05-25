@@ -33,10 +33,18 @@ namespace WebAPI.Controllers
         public IActionResult Post([FromBody] PostContactRequest request)
         {
             var user = userService.Get(request.User);
+            var user2 = userService.Get(request.Id);
+
             if (user == null) return NotFound();
+            if (user2 == null) return NotFound();
 
             var contact = new Contact(request.Id, request.Name, request.Server, null, null);
             user.Contacts.Add(contact);
+
+
+            var contact2 = new Contact(user.Id, user.Name, user.Server, null, null);
+            user2.Contacts.Add(contact2);
+
             return StatusCode(201);
         }
 
@@ -67,7 +75,6 @@ namespace WebAPI.Controllers
             contact.Server = request.Server;
 
             return StatusCode(204);
-
         }
 
         // DELETE api/<ContactsController>/id
