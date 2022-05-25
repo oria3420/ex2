@@ -41,12 +41,13 @@ namespace ASP.MVC.Models.Services
             Add(item);
         }
 
-        public double Average()
+        public string Average()
         {
-            double sum = 0;
+            float sum = 0;
             foreach (Rate rate in rates)
                 sum += rate.Rating;
-            return sum / rates.Count;
+            float avr = sum / rates.Count;
+            return String.Format("{0:0.00}", avr);
         }
     }
 }

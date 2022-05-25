@@ -9,6 +9,6 @@
         void Update(Rate item);
         void Delete(int id);
 
-        double Average();
+        string Average();
     }
 }
