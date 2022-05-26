@@ -5,6 +5,7 @@ import { fomatCurrentDate } from "../../../../config/time.config";
 import useUser from "../../../../hooks/useUser";
 import MediaUpload from "../MediaUpload";
 import {server} from '../../../../config/db.config'
+import { format } from "date-fns";
 
 function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatContacts }) {
   const inputRef = useRef()
@@ -15,7 +16,7 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
   // FETCH MESSAGES OF CHAT -- DOESN'T WORK
   // useEffect(async () => {
   //   if (currentChat !== undefined) {
-  //     console.log("Fetch to: " + server + "/contacts/" + currentChat.nickname + "/messages")
+  //   console.log("Fetch to: " + server + "/contacts/" + currentChat.chatContacts.name + "/messages")
   //     var response = await fetch(server + "/contacts/" + currentChat.nickname + "/messages?user=" + user.id);
   //     var data = await response.json();
   //     console.log("Oriya: " + data);
@@ -26,8 +27,8 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
 
 
   function hideMediaUpload() {
-    let mediaUpload = document.getElementById('mediaUpload');
-    mediaUpload.style.visibility = 'hidden';
+    // let mediaUpload = document.getElementById('mediaUpload');
+    // mediaUpload.style.visibility = 'hidden';
   }
 
   const onNewMessage = () => {
@@ -38,7 +39,7 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
 
     let newMSG = {
       content: inputRef.current.value,
-      timestamp: fomatCurrentDate(),
+      timestamp: fomatCurrentDate,
       username: user?.username,
     }
     if(mediaUpload && inputRef.current.value.trim().length === 0){
@@ -53,9 +54,8 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
       }
     }
     const newChatContacts = chatContacts.map(userObj => {
-      if (userObj.name === currentChat.name) {
+      if (userObj.username === currentChat.username) {
         return { ...userObj, lastMessageTime: newMSG.timestamp, lastMessage: newMSG.content, chat: [...userObj.chat, newMSG] }
-        // return { ...userObj, lastMessageTime: "8:00 AM", lastMessage: newMSG.content, chat: [...userObj.chat, newMSG] }
       }
       return userObj;
     })
@@ -88,7 +88,7 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
           <div className="chat-user-img">
             <img src={currentChat?.image} alt="" />
           </div>
-          <p> {currentChat?.nickname} </p>
+          <p> {currentChat?.name} </p>
         </div>
       </div>
 
@@ -97,10 +97,10 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
           <div className="chat-display-bg"></div>
         ) : (<>
           <div className="chat-bubble-continer" onClick={hideMediaUpload}>
-            {currentChat.chat.map(chatMsg => (
-              <ChatMessage key={chatMsg.timestamp} username={chatMsg.username} audio={chatMsg.audio}
-                message={chatMsg.content} time={chatMsg.timestamp} video={chatMsg.video} image={chatMsg.image} />
-            ))}
+          {currentChat.chat?.map(chatMsg => (
+            <ChatMessage key={chatMsg.timestamp} username={chatMsg.username} audio={chatMsg.audio}
+              message={chatMsg.content} time={chatMsg.timestamp} video={chatMsg.video} image={chatMsg.image} />
+          ))}
             <div ref={msgRef}></div>
           </div>
           <div className="chat-input">
@@ -111,9 +111,9 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
           </div>
         </>)}
 
-
       </div>
     </div>
+    
   );
 }
 

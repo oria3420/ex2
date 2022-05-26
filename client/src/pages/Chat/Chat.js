@@ -4,7 +4,8 @@ import Chatcontainer from "./components/ChatContianer/Chatcontainer";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { GENERATE_CHATS } from "../../config/messages.config";
-import { server } from "../../config/db.config";
+import { server} from "../../config/db.config";
+
 
 import useUser from './../../hooks/useUser';
 

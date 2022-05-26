@@ -94,6 +94,10 @@ function Login({setUser, setUserStatus}) {
                         to register
                     </span>
 
+                    <div>
+                    <a  style={{ margin: '0 30%' }} href="http://localhost:5138/">Rate Page</a>
+                    </div>
+                   
                 </form>
 
             </nav>

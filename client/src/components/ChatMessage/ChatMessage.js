@@ -10,9 +10,9 @@ function ChatMessage({ message, time, username, image, video, audio }) {
       <div className="chat-message-text">
         <label>{message}</label>
       </div>
-     {image && <ImageMSG image={image}/>}
-     {video && <VideoMSG video={video}/>}
-     {audio && <AudioMSG audio={audio}/>}
+      {image && <ImageMSG image={image}/>}
+      {video && <VideoMSG video={video}/>}
+      {audio && <AudioMSG audio={audio}/>}
       <div className="chat-message-date">
         <p>{showOnlyHour(time)}</p>
       </div>
