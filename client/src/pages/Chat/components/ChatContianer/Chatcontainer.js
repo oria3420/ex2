@@ -13,7 +13,7 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
   const msgRef = useRef()
   const user = useUser()
 
-  // FETCH MESSAGES OF CHAT -- DOESN'T WORK
+  //DOESN'T WORK
   // useEffect(async () => {
   //   if (currentChat !== undefined) {
   //   console.log("Fetch to: " + server + "/contacts/" + currentChat.chatContacts.name + "/messages")
@@ -25,14 +25,12 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
   //   }
   // }, []);
 
-
   function hideMediaUpload() {
     // let mediaUpload = document.getElementById('mediaUpload');
     // mediaUpload.style.visibility = 'hidden';
   }
 
   const onNewMessage = () => {
-
     if (inputRef.current.value.trim().length === 0 && !mediaUpload) {
       return alert("you must type at least one letter")
     }
@@ -62,10 +60,8 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
 
     setChatContacts(newChatContacts)
     setCurrentChat(curr => 
-      ({ ...curr.chatMsg, chat:[ newMSG]})
+      ({ ...curr.chatMsg, chat:[ curr.chat, newMSG]})
       )
-
-
     inputRef.current.value = ''
     hideMediaUpload();
     setMediaUpload()
@@ -83,7 +79,6 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
     let mediaUpload = document.getElementById('mediaUpload');
     mediaUpload.style.visibility = 'visible';
   }
-
 
   return (
     <div className="chat-container">
@@ -109,15 +104,12 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
           </div>
           <div className="chat-input">
             <MediaUpload mediaUpload={mediaUpload} setMediaUpload={setMediaUpload}/>
-
             <input id="input" ref={inputRef} placeholder="Type new message here..." />
             <button id="sendBtn" onClick={onNewMessage} className="chat-input-send-btn" formAction='javascript:alert("Bingo!");'>send</button>
           </div>
         </>)}
-
       </div>
-    </div>
-    
+    </div>  
   );
 }
 
