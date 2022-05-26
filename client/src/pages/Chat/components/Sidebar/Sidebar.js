@@ -9,7 +9,7 @@ import useUser from "../../../../hooks/useUser";
 
 function Sidebar({ currentChat, setCurrentChat, chatContacts, setChatContacts, props }) {
   const user = useUser()
-  const [contacts, setContacts] = useState(db)
+  const [contacts, setContacts] = useState(server)
 
   // useEffect(async () => {
   //   var response = await fetch(server + "/contacts" + "?user=" + props.user.username);
@@ -19,6 +19,15 @@ function Sidebar({ currentChat, setCurrentChat, chatContacts, setChatContacts, p
   // }, []);
 
 
+  // var postBody = { "userId": loginForm.username, "password": loginForm.password };
+  // var params = {
+  //     method: 'POST',
+  //     headers: {
+  //         'Content-Type': "application/json",
+  //     },
+  //     body: JSON.stringify(postBody)
+  // }
+
   return (
     <div className="sidebar">
       <div className="sidebar-header">
@@ -26,16 +35,16 @@ function Sidebar({ currentChat, setCurrentChat, chatContacts, setChatContacts, p
           <div className="sidebar-header-img" >
             <Avatar profileSRC={user.image} />
           </div>
-          <label>{user.username}</label>
+          <label>{user.nickname}</label>
         </div>
         <div>
-          <CreateContact chatContacts={chatContacts} contacts={contacts} setChatContacts={setChatContacts} />
+          <CreateContact chatContacts={chatContacts} contacts={contacts} setChatContacts={setChatContacts} props={props} />
         </div>
       </div>
       <div className="sidebar-chat-list">
         {chatContacts?.map(userChat => (
           <UserProfile key={userChat.name} userChat={userChat} currentChat={currentChat}
-            setCurrentChat={setCurrentChat} />
+            setCurrentChat={setCurrentChat} props={props} />
         ))}
       </div>
     </div>
