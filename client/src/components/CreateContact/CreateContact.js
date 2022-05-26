@@ -12,7 +12,6 @@ const CreateContact = ({ chatContacts, setChatContacts, contacts, props }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
   async function handleAddContact() {
     if (userInputRef.current) {
       const { value } = userInputRef.current
@@ -34,7 +33,7 @@ const CreateContact = ({ chatContacts, setChatContacts, contacts, props }) => {
         },
         body: JSON.stringify(postBody)
       }
-      var response = await fetch("http://localhost:5235/api" + "/contacts/?user=" + props.user.username,params);
+      var response = await fetch(server + "/contacts/?user=" + props.user.username,params);
       if(response.status === 201){
         var data = await response.json()
         const foundContact = data.find(elem => elem.username === value)
@@ -56,23 +55,6 @@ const CreateContact = ({ chatContacts, setChatContacts, contacts, props }) => {
     }
   }
 
-  //   // var response = await fetch(server + "/contacts" + "?user=" +userChat.id, params);
-  //   // if(response.status === 200) {
-  //   //     var data = await response.json();
-  //   //     // var user = { username: loginForm.username, password: loginForm.password, image: DEFAULT_IMAGE, 
-  //   //     //     nickname: data.name };
-  //   //     // setUser(user)
-  //   //     // setUserStatus(USER_STATUSES.LOGGED_IN)
-  //   //     // setTimeout(() => navigate("/Chat"), 200)
-  //   // }
-  //     console.log("Fetch to: " + server + "/contacts/" + userChat.id +  "/messages?user=" +props.user.username)
-  //       var response = await fetch( server + "/contacts/" +userChat.id + "/messages?user=" +props.user.username);
-  //       var data = await response.json();
-  //       console.log(": " + data.userChat);
-  //       //userChat.lastMessage=data.lastMessage
-  //       //setCurrentChat(userChat);
-  //        currentChat = data;
-  // }
   return (
     <div>
       <Button variant="secondary" onClick={handleShow}>
@@ -83,7 +65,6 @@ const CreateContact = ({ chatContacts, setChatContacts, contacts, props }) => {
           </path>
         </svg>
       </Button>
-
       <Modal centered show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add New Contact</Modal.Title>
