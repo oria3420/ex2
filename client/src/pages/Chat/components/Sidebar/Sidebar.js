@@ -17,8 +17,6 @@ function Sidebar({ currentChat, setCurrentChat, chatContacts, setChatContacts, p
   //   console.log(data);
   //   setContacts(data);
   // }, []);
-
-
   // var postBody = { "userId": loginForm.username, "password": loginForm.password };
   // var params = {
   //     method: 'POST',
