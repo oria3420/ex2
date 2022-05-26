@@ -5,11 +5,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { GENERATE_CHATS } from "../../config/messages.config";
 import { server} from "../../config/db.config";
-
-
 import useUser from './../../hooks/useUser';
 
-function Chat(props) {
+function Chat( props ) {
     const user = useUser()
     const [currentChat, setCurrentChat] = useState()
     const [chatContacts, setChatContacts] = useState([])
@@ -18,7 +16,7 @@ function Chat(props) {
 
     useEffect(async() => {
         console.log(props.user.username)
-        var response = await fetch(server + "/contacts"+"?user="+props.user.username);
+        var response = await fetch(server + "/contacts"+"?user="+ props.user.username);
         var data = await response.json();
         console.log(data);
         setChatContacts(data);
