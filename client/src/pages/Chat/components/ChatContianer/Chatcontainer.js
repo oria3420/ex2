@@ -61,7 +61,11 @@ function Chatcontainer({ currentChat, setCurrentChat, chatContacts, setChatConta
     })
 
     setChatContacts(newChatContacts)
-    setCurrentChat(curr => ({ ...curr, chat: [...curr.chat, newMSG] }))
+    setCurrentChat(curr => 
+      ({ ...curr.chatMsg, chat:[ newMSG]})
+      )
+
+
     inputRef.current.value = ''
     hideMediaUpload();
     setMediaUpload()
