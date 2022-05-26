@@ -15,16 +15,7 @@ function UserProfile({ userChat, setCurrentChat, currentChat, props }) {
         },
          body: JSON.stringify(postBody)
     }
-    // var response = await fetch(server + "/contacts" + "?user=" +userChat.id, params);
-    // if(response.status === 200) {
-    //     var data = await response.json();
-    //     // var user = { username: loginForm.username, password: loginForm.password, image: DEFAULT_IMAGE, 
-    //     //     nickname: data.name };
-    //     // setUser(user)
-    //     // setUserStatus(USER_STATUSES.LOGGED_IN)
-    //     // setTimeout(() => navigate("/Chat"), 200)
-    // }
-      console.log("Fetch to: " + server + "/contacts/" + userChat.id +  "/messages?user=" +props.user.username)
+      //console.log("Fetch to: " + server + "/contacts/" + userChat.id +  "/messages?user=" +props.user.username)
         var response = await fetch( server + "/contacts/" +userChat.id + "/messages?user=" +props.user.username);
         var data = await response.json();
         console.log(": " + data.userChat);
